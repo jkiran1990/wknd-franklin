@@ -1,0 +1,37 @@
+/* Container for the product cards */
+.product-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/* Style for each product card */
+.product-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 16px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(25% - 32px); /* 4 cards in a row with margin */
+    max-width: calc(25% - 32px); /* Ensure cards don't exceed 25% width */
+}
+
+/* Style for product card image */
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+/* Title, description, and price styling */
+.product-card h3, .product-card p {
+    margin: 8px 0;
+}
+
+/* Media query for mobile devices to show 1 card per row */
+@media (max-width: 768px) {
+    .product-card {
+        flex: 1 1 calc(100% - 32px); /* 1 card in a row with margin */
+        max-width: calc(100% - 32px); /* Ensure card takes up full width */
+    }
+}

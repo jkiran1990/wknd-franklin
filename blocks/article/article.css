@@ -1,0 +1,51 @@
+.articleWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four columns */
+  gap: 20px;
+}
+
+.articleCard {
+  height: 300px; /* Fixed height for each card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.articleCard img {
+  width: 100%;
+  height: auto;
+}
+
+.articleCard h3 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.articleCard .description {
+  font-size: 1em;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+}
+
+.articleCard:hover {
+  transform: translateY(-5px);
+}
+
+@media (width < 900px) {
+
+
+.articleWrapper{
+  
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+
+}
+}

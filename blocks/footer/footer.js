@@ -1,28 +1,20 @@
-import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { getMetadata } from '../../scripts/aem.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 /**
  * loads and decorates the footer
- * @param {Element} block The header block element
+ * @param {Element} block The footer block element
  */
-
 export default async function decorate(block) {
-  const navPath = window.wknd.demoConfig.demoBase || '';
+  // load footer as fragment
+  const footerMeta = getMetadata('footer');
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+  const fragment = await loadFragment(footerPath);
 
-  const resp = await fetch(`${navPath}/footer.plain.html`, window.location.pathname.endsWith('/footer') ? { cache: 'reload' } : {});
-  if (resp.ok) {
-    block.textContent = '';
+  // decorate footer DOM
+  block.textContent = '';
+  const footer = document.createElement('div');
+  while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
-    const html = await resp.text();
-    const footer = document.createElement('div');
-    footer.innerHTML = html;
-    await decorateIcons(footer);
-
-    const classes = ['brand', 'nav', 'follow', 'disc'];
-    let f = footer.firstElementChild;
-    while (f && classes.length) {
-      f.classList.add(classes.shift());
-      f = f.nextElementSibling;
-    }
-    block.append(footer);
-  }
+  block.append(footer);
 }
