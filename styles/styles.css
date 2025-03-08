@@ -16,8 +16,8 @@
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --link-color: #131313;
+  --link-hover-color: #ffea00;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
@@ -239,7 +239,7 @@ main > .section > div {
 }
 
 main > .section:first-of-type {
-  margin-top: 30px;
+  margin-top: 0;
 }
 
 @media (width >= 900px) {
