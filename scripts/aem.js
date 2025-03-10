@@ -547,34 +547,33 @@ function decorateSections(main) {
 // eslint-disable-next-line import/prefer-default-export
 async function fetchPlaceholders(prefix = 'default') {
   window.placeholders = window.placeholders || {};
-  const loaded = window.placeholders[`${prefix}-loaded`];
-  if (!loaded) {
-    window.placeholders[`${prefix}-loaded`] = new Promise((resolve, reject) => {
-      try {
-        fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
-          .then((resp) => resp.json())
-          .then((json) => {
-            const placeholders = {};
-            json.data.forEach((placeholder) => {
+  if (!window.placeholders[prefix]) {
+    window.placeholders[prefix] = new Promise((resolve) => {
+      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
+        .then((resp) => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          return {};
+        })
+        .then((json) => {
+          const placeholders = {};
+          json.data
+            .filter((placeholder) => placeholder.Key)
+            .forEach((placeholder) => {
               placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
             });
-            window.placeholders[prefix] = placeholders;
-            resolve();
-          })
-          .catch((error) => {
-            // error loading placeholders
-            window.placeholders[prefix] = {};
-            reject(error);
-          });
-      } catch (error) {
-        // error loading placeholders
-        window.placeholders[prefix] = {};
-        reject();
-      }
+          window.placeholders[prefix] = placeholders;
+          resolve(window.placeholders[prefix]);
+        })
+        .catch(() => {
+          // error loading placeholders
+          window.placeholders[prefix] = {};
+          resolve(window.placeholders[prefix]);
+        });
     });
   }
-  await window.placeholders[`${prefix}-loaded`];
-  return window.placeholders[prefix];
+  return window.placeholders[`${prefix}`];
 }
 
 /**
